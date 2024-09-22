@@ -1,69 +1,51 @@
-package com.uvg.renato.lab8.charactersProfile
+package com.uvg.renato.lab8.locationDetails
+
+import LocationDb
 import androidx.compose.foundation.layout.Arrangement
-import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.Spacer
-import androidx.compose.foundation.layout.WindowInsets
-import androidx.compose.foundation.layout.fillMaxHeight
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
-import androidx.compose.foundation.layout.windowInsetsPadding
 import androidx.compose.foundation.shape.CircleShape
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.ArrowBack
-import androidx.compose.material3.BottomAppBar
-import androidx.compose.material3.ColorScheme
 import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.material3.Icon
 import androidx.compose.material3.IconButton
 import androidx.compose.material3.MaterialTheme
-import androidx.compose.material3.NavigationBar
-import androidx.compose.material3.NavigationBarItem
-import androidx.compose.material3.Surface
 import androidx.compose.material3.Text
 import androidx.compose.material3.TopAppBar
 import androidx.compose.material3.TopAppBarDefaults
 import androidx.compose.runtime.Composable
-import androidx.compose.runtime.getValue
-import androidx.compose.runtime.mutableStateOf
-import androidx.compose.runtime.remember
-import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
-import androidx.compose.ui.res.dimensionResource
 import androidx.compose.ui.text.font.FontStyle
 import androidx.compose.ui.text.font.FontWeight
-import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import coil.compose.AsyncImage
-import com.uvg.renato.lab8.Character
 import com.uvg.renato.lab8.CharacterDb
-import com.uvg.renato.lab8.ui.theme.Lab8Theme
 
 
-
-val myCharacterDB = CharacterDb()
+val myLocDB = LocationDb()
 
 @Composable
-fun CharacterProfileRoute(
+fun LocationDetailsRoute(
     id: Int,
     onNavigateBack: () -> Unit,
 ) {
-    val thisCharacter = myCharacterDB.getCharacterById(id)
+    val thisLocation = myLocDB.getLocationById(id)
 
 
-    CharacterProfileScreen(
+    LocationDetailsScreen(
         id = id,
-        name = thisCharacter.name,
-        species = thisCharacter.species,
-        status = thisCharacter.status,
-        gender = thisCharacter.gender,
-        image = thisCharacter.image,
+        name = thisLocation.name,
+        type = thisLocation.type,
+        dimension = thisLocation.dimension,
         onNavigateBack = onNavigateBack,
         modifier = Modifier.fillMaxSize()
     )
@@ -71,19 +53,17 @@ fun CharacterProfileRoute(
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
-private fun CharacterProfileScreen(
+private fun LocationDetailsScreen(
     id: Int,
     name: String,
-    species: String,
-    status: String,
-    gender: String,
-    image : String,
+    type: String,
+    dimension: String,
     onNavigateBack: () -> Unit,
     modifier: Modifier = Modifier
 ) {
     Column(modifier = modifier.fillMaxSize()) {
         TopAppBar(
-            title = { Text(text = "Character Detail", style = MaterialTheme.typography.titleLarge, fontWeight = FontWeight.Bold, fontStyle = FontStyle.Italic )},
+            title = { Text(text = "Location Details", style = MaterialTheme.typography.titleLarge, fontWeight = FontWeight.Bold, fontStyle = FontStyle.Italic ) },
             navigationIcon = {
                 IconButton(onClick = onNavigateBack) {
                     Icon(Icons.Default.ArrowBack, contentDescription = "Back")
@@ -103,62 +83,24 @@ private fun CharacterProfileScreen(
             , verticalArrangement = Arrangement.Center
 
         ) {
-            AsyncImage(model = image, contentDescription = "characterImage",modifier= Modifier
-                .clip(
-                    CircleShape
-                )
-                .size(250.dp))
-            Spacer(modifier = Modifier.height(30.dp))
 
-            Text(text = "Name: $name", style = MaterialTheme.typography.titleLarge)
+            Spacer(modifier = Modifier.height(30.dp))
+            Text(text = name, style = MaterialTheme.typography.titleLarge)
             Spacer(modifier = Modifier.height(10.dp))
             Row(horizontalArrangement = Arrangement.SpaceBetween, modifier = Modifier.fillMaxWidth()) {
-                Text(text = "Species")
-                Text(text = species)
+                Text(text = "ID:")
+                Text(text = "$id")
             }
             Row(horizontalArrangement = Arrangement.SpaceBetween, modifier = Modifier.fillMaxWidth()){
-                Text(text = "Status:")
-                Text(text = status)
+                Text(text = "Type:")
+                Text(text = type)
 
             }
             Row(horizontalArrangement = Arrangement.SpaceBetween, modifier = Modifier.fillMaxWidth()) {
-                Text(text = "Gender:")
-                Text(text = gender)
+                Text(text = "Dimension:")
+                Text(text = dimension)
             }
 
         }
-    }
-}
-
-
-@Composable
-fun CharacterProfileScreenPreview() {
-    val character = Character(
-        id = 1,
-        name = "Rick Sanchez",
-        species = "Human",
-        status = "Alive",
-        gender = "Male",
-        image = "https://example.com/rick_image.jpg"
-    )
-
-    CharacterProfileScreen(
-        id = character.id,
-        name = character.name,
-        species = character.species,
-        status = character.status,
-        gender = character.gender,
-        image = character.image,
-        onNavigateBack = {}
-    )
-}
-@Preview
-@Composable
-fun CharacterProfileScreenPreviewLight() {
-    MaterialTheme(
-        colorScheme = MaterialTheme.colorScheme
-
-    ) {
-        CharacterProfileScreenPreview()
     }
 }

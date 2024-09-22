@@ -40,7 +40,7 @@ fun LoginScreen(
     Column (verticalArrangement = Arrangement.Center, horizontalAlignment = Alignment.CenterHorizontally, modifier = Modifier.fillMaxSize().padding(10.dp)){
         Spacer(modifier = Modifier.height(200.dp))
         Image(painter = painterResource(id = R.drawable.rick_and_morty_emblem), contentDescription = "series logo")
-        Button(onClick = onButtonClick, modifier = Modifier.fillMaxWidth() ) {
+        Button(onClick = onButtonClick , modifier = Modifier.fillMaxWidth() ) {
             Text(text = "Entrar")
 
         }

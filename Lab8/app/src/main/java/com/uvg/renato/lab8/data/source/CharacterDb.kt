@@ -1,4 +1,6 @@
-package com.uvg.renato.lab8
+package com.uvg.renato.lab8.data.source
+
+import com.uvg.renato.lab8.data.model.Character
 
 class CharacterDb {
     private val characters: List<Character> = listOf(

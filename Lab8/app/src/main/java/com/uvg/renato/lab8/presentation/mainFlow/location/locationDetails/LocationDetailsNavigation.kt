@@ -1,34 +1,33 @@
-package com.uvg.renato.lab8.locationDetails
+package com.uvg.renato.lab8.presentation.mainFlow.location.locationDetails
 
 import androidx.navigation.NavController
 import androidx.navigation.NavGraphBuilder
 import androidx.navigation.NavOptions
 import androidx.navigation.compose.composable
 import androidx.navigation.toRoute
-import com.uvg.renato.lab8.charactersProfile.CharacterProfileRoute
 import kotlinx.serialization.Serializable
 
 
 @Serializable
 data class LocationDetailsDestination(
-    val characterId: Int,
+    val locationId: Int,
 )
 
 fun NavController.navigateToLocationDetailsScreen(
-    destination: LocationDetailsDestination,
+    locationId: Int,
     navOptions: NavOptions? = null
 ) {
-    this.navigate(destination, navOptions)
-
+    this.navigate(
+        route = LocationDetailsDestination(locationId = locationId),
+        navOptions = navOptions
+    )
 }
 
 fun NavGraphBuilder.locationDetailsScreen(
     onNavigateBack: () -> Unit
 ) {
-    composable<LocationDetailsDestination> { backStackEntry ->
-        val destination: LocationDetailsDestination = backStackEntry.toRoute()
+    composable<LocationDetailsDestination> {
         LocationDetailsRoute(
-            id = destination.characterId,
             onNavigateBack = onNavigateBack
         )
     }

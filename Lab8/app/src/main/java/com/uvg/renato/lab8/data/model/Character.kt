@@ -1,4 +1,4 @@
-package com.uvg.renato.lab8
+package com.uvg.renato.lab8.data.model
 
 data class Character(
     val id: Int,

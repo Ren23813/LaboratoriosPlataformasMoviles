@@ -1,12 +1,12 @@
-package com.uvg.renato.lab8.charactersList
+package com.uvg.renato.lab8.presentation.mainFlow.character.charactersList
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.ui.Modifier
 import androidx.navigation.NavController
 import androidx.navigation.NavGraphBuilder
 import androidx.navigation.NavOptions
 import androidx.navigation.compose.composable
-import com.uvg.renato.lab8.*
-import com.uvg.renato.lab8.locations.LocationsDestination
+import com.uvg.renato.lab8.data.model.Character
+import com.uvg.renato.lab8.presentation.mainFlow.location.locations.LocationsDestination
 import kotlinx.serialization.Serializable
 
 @Serializable

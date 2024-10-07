@@ -1,4 +1,4 @@
-package com.uvg.renato.lab8.userProfile
+package com.uvg.renato.lab8.presentation.mainFlow.userProfile
 
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.layout.Arrangement
@@ -9,21 +9,11 @@ import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
-import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.shape.CircleShape
-import androidx.compose.material.icons.Icons
-import androidx.compose.material.icons.filled.ArrowBack
-import androidx.compose.material3.BottomAppBar
 import androidx.compose.material3.Button
 import androidx.compose.material3.ExperimentalMaterial3Api
-import androidx.compose.material3.Icon
-import androidx.compose.material3.IconButton
 import androidx.compose.material3.MaterialTheme
-import androidx.compose.material3.NavigationBar
-import androidx.compose.material3.NavigationBarItem
 import androidx.compose.material3.Text
-import androidx.compose.material3.TopAppBar
-import androidx.compose.material3.TopAppBarDefaults
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
@@ -33,22 +23,18 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
 import androidx.compose.ui.res.painterResource
-import androidx.compose.ui.text.font.FontStyle
-import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
-import coil.compose.AsyncImage
-import com.uvg.renato.lab8.CharacterDb
 import com.uvg.renato.lab8.R
 
 
 @Composable
 fun UserProfileRoute(
-    onButtonClick: () -> Unit,
-    modifier: Modifier
+    onLogOutClick: () -> Unit,
+
 ) {
     UserProfileScreen(
-        modifier = modifier.fillMaxSize(),
-        onButtonClick = onButtonClick
+        modifier = Modifier.fillMaxSize(),
+        onLogOutClick = onLogOutClick
     )
 }
 
@@ -57,9 +43,8 @@ fun UserProfileRoute(
 @Composable
 private fun UserProfileScreen(
     modifier: Modifier = Modifier,
-    onButtonClick: () -> Unit
+    onLogOutClick: () -> Unit
 ) {
-    var selectedItem by remember { mutableStateOf(0) }
 
     Column(modifier = modifier.fillMaxSize()) {
         Column(
@@ -80,7 +65,7 @@ private fun UserProfileScreen(
                 Text(text = "Carné")
                 Text(text = "23813")
             }
-           Button(onClick = onButtonClick) { //navegar al login; limpiar backstack
+           Button(onClick = onLogOutClick) { //navegar al login; limpiar backstack
                Text(text = "Cerrar sesión")
            }
 

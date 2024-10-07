@@ -1,15 +1,10 @@
-package com.uvg.renato.lab8.locations
+package com.uvg.renato.lab8.presentation.mainFlow.location.locations
 
-import Location
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.ui.Modifier
-import androidx.navigation.NavController
 import androidx.navigation.NavGraphBuilder
-import androidx.navigation.NavOptions
 import androidx.navigation.compose.composable
-import com.uvg.renato.lab8.Character
-import com.uvg.renato.lab8.charactersList.CharacterListDestination
-import com.uvg.renato.lab8.charactersList.CharacterListRoute
+import com.uvg.renato.lab8.data.model.Location
 import kotlinx.serialization.Serializable
 
 
@@ -17,12 +12,11 @@ import kotlinx.serialization.Serializable
 data object LocationsDestination
 
 fun NavGraphBuilder.locationsScreen(
-    onLocationClick: (Location) -> Unit
+    onLocationClick: (Int) -> Unit
 ) {
     composable<LocationsDestination> {
         LocationsRoute(
             onLocationClick = onLocationClick,
-            modifier = Modifier.fillMaxWidth()
         )
     }
 

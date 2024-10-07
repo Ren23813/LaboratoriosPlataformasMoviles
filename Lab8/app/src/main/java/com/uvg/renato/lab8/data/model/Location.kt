@@ -1,3 +1,5 @@
+package com.uvg.renato.lab8.data.model
+
 data class Location(
     val id: Int,
     val name: String,

@@ -1,3 +1,7 @@
+package com.uvg.renato.lab8.data.source
+
+import com.uvg.renato.lab8.data.model.Location
+
 // import .....Location
 
 class LocationDb {

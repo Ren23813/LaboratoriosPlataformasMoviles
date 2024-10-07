@@ -1,10 +1,9 @@
-package com.uvg.renato.lab8.charactersProfile
+package com.uvg.renato.lab8.presentation.mainFlow.character.charactersProfile
 import androidx.navigation.NavController
 import androidx.navigation.NavGraphBuilder
 import androidx.navigation.NavOptions
 import androidx.navigation.compose.composable
 import androidx.navigation.toRoute
-import com.uvg.renato.lab8.CharacterDb
 import kotlinx.serialization.Serializable
 
 @Serializable

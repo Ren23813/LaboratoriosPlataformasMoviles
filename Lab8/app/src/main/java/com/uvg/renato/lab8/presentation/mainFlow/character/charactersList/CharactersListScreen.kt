@@ -1,7 +1,4 @@
-package com.uvg.renato.lab8.locations
-
-import Location
-import LocationDb
+package com.uvg.renato.lab8.presentation.mainFlow.character.charactersList
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
@@ -12,11 +9,8 @@ import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.items
 import androidx.compose.foundation.shape.CircleShape
-import androidx.compose.material3.BottomAppBar
 import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.material3.MaterialTheme
-import androidx.compose.material3.NavigationBar
-import androidx.compose.material3.NavigationBarItem
 import androidx.compose.material3.Text
 import androidx.compose.material3.TopAppBar
 import androidx.compose.material3.TopAppBarDefaults
@@ -29,36 +23,33 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
 import androidx.compose.ui.unit.dp
 import coil.compose.AsyncImage
-import com.uvg.renato.lab8.Character
-import com.uvg.renato.lab8.CharacterDb
+import com.uvg.renato.lab8.data.model.Character
 
 
 @Composable
-fun LocationsRoute(
-    onLocationClick: (Location) -> Unit,
+fun CharacterListRoute(
+    onCharacterClick: (Character) -> Unit,
     modifier: Modifier = Modifier
 ) {
-    LocationsScreen(
-        onLocationClick = onLocationClick,
+    CharacterListScreen(
+        onCharacterClick = onCharacterClick,
         modifier = modifier
     )
 }
-
-val myLocDB = LocationDb()
+public val myDB = com.uvg.renato.lab8.data.source.CharacterDb()
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
-private fun LocationsScreen(
-    onLocationClick: (Location) -> Unit,
+private fun CharacterListScreen(
+    onCharacterClick: (Character) -> Unit,
     modifier: Modifier = Modifier
 ) {
     Column {
         var selectedItem by remember { mutableStateOf(0) }
-        TopAppBar(
-            modifier = Modifier
-                .height(75.dp)
-                .fillMaxWidth(),
-            title = { Text(text = "Locations", style = MaterialTheme.typography.titleLarge) },
+        TopAppBar(modifier = Modifier
+            .height(75.dp)
+            .fillMaxWidth(),
+            title = { Text(text = "Characters", style = MaterialTheme.typography.titleLarge) },
             colors = TopAppBarDefaults.topAppBarColors(
                 containerColor = MaterialTheme.colorScheme.primaryContainer,
                 navigationIconContentColor = MaterialTheme.colorScheme.onPrimaryContainer,
@@ -66,26 +57,24 @@ private fun LocationsScreen(
             )
         )
         LazyColumn(modifier.weight(0.8f)) {
-            items(myLocDB.getAllLocations()) { location ->
+            items(myDB.getAllCharacters()) { character ->
                 Box(
                     modifier = Modifier
                         .fillMaxWidth()
                         .height(48.dp)
-                        .clickable { onLocationClick(location) }
+                        .clickable { onCharacterClick(character) }
                 ) {
                     Row {
+                        AsyncImage(model = character.image, contentDescription = "characterImage",modifier=Modifier.clip(
+                            CircleShape))
                         Column {
                             Text(
-                                text = location.name,
+                                text = character.name,
                                 modifier = Modifier
                                     .padding(start = 16.dp),
                                 style = MaterialTheme.typography.bodyLarge
                             )
-                            Text(
-                                text = location.type,
-                                modifier = Modifier.padding(start = 16.dp),
-                                style = MaterialTheme.typography.labelMedium
-                            )
+                            Text(text = character.species +" - "+character.status, modifier = Modifier.padding(start = 16.dp), style = MaterialTheme.typography.labelMedium)
                         }
                     }
                 }

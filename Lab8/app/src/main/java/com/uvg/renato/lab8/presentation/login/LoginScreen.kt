@@ -1,4 +1,4 @@
-package com.uvg.renato.lab8.login
+package com.uvg.renato.lab8.presentation.login
 
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.layout.Arrangement
@@ -20,27 +20,26 @@ import androidx.compose.ui.unit.dp
 import com.uvg.renato.lab8.*
 import com.uvg.renato.lab8.ui.theme.Lab8Theme
 
+
 @Composable
 fun LoginRoute(
-    onButtonClick: () -> Unit,
-    modifier: Modifier = Modifier
+    onLoginClick: () -> Unit,
 ) {
     LoginScreen(
-        onButtonClick = onButtonClick,
-        modifier = modifier
+        onLoginClick = onLoginClick,
+        modifier = Modifier.fillMaxSize()
     )
 }
 
-
 @Composable
 fun LoginScreen(
-    onButtonClick: () -> Unit,
+    onLoginClick: () -> Unit,
     modifier: Modifier = Modifier)
 {
     Column (verticalArrangement = Arrangement.Center, horizontalAlignment = Alignment.CenterHorizontally, modifier = Modifier.fillMaxSize().padding(10.dp)){
         Spacer(modifier = Modifier.height(200.dp))
         Image(painter = painterResource(id = R.drawable.rick_and_morty_emblem), contentDescription = "series logo")
-        Button(onClick = onButtonClick , modifier = Modifier.fillMaxWidth() ) {
+        Button(onClick = onLoginClick , modifier = Modifier.fillMaxWidth() ) {
             Text(text = "Entrar")
 
         }
@@ -50,14 +49,4 @@ fun LoginScreen(
     }
 }
 
-@Preview
-@Composable
-fun previewLoginScreen(){
-    Surface(modifier = Modifier
-        .fillMaxSize()
-        .padding(50.dp)) {
-    }
-    Lab8Theme {
-        LoginScreen(onButtonClick = {  })
-    }
-}
+

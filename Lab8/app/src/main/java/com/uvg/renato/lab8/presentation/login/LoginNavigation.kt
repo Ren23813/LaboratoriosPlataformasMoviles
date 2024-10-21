@@ -6,6 +6,7 @@ import androidx.navigation.NavController
 import androidx.navigation.NavGraphBuilder
 import androidx.navigation.NavOptions
 import androidx.navigation.compose.composable
+import com.uvg.renato.lab8.data.source.UserPreferences
 import com.uvg.renato.lab8.presentation.mainFlow.character.charactersList.CharacterListDestination
 import kotlinx.serialization.Serializable
 
@@ -13,11 +14,14 @@ import kotlinx.serialization.Serializable
 data object LoginDestination
 
 fun NavGraphBuilder.loginScreen(
-    onLoginClick: () -> Unit
+    onLoginClick: () -> Unit,
+    userPreferences: UserPreferences
 ) {
     composable<LoginDestination> {
         LoginRoute(
             onLoginClick = onLoginClick,
+            userPreferences = userPreferences
+
         )
     }
 }

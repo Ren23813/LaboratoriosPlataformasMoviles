@@ -2,6 +2,7 @@ package com.uvg.renato.lab8.presentation.mainFlow.userProfile
 
 import androidx.navigation.NavGraphBuilder
 import androidx.navigation.compose.composable
+import com.uvg.renato.lab8.data.source.UserPreferences
 import com.uvg.renato.lab8.presentation.login.*
 import kotlinx.serialization.Serializable
 
@@ -10,9 +11,10 @@ import kotlinx.serialization.Serializable
 data object UserProfileDestination
 
 fun NavGraphBuilder.userProfileScreen(
-    onLogOutClick: () -> Unit
+    onLogOutClick: () -> Unit,
+    userPreferences: UserPreferences
 ) {
     composable<UserProfileDestination> {
-        UserProfileRoute(onLogOutClick = onLogOutClick)
+        UserProfileRoute(onLogOutClick = onLogOutClick, userPreferences = userPreferences)
     }
 }

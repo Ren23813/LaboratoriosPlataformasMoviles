@@ -19,6 +19,7 @@ import androidx.navigation.compose.NavHost
 import androidx.navigation.NavHostController
 import androidx.navigation.compose.currentBackStackEntryAsState
 import androidx.navigation.compose.rememberNavController
+import com.uvg.renato.lab8.data.source.UserPreferences
 import com.uvg.renato.lab8.presentation.mainFlow.character.CharacterNavGraph
 import com.uvg.renato.lab8.presentation.navigation.BottomNavBar
 import com.uvg.renato.lab8.presentation.navigation.topLevelDestinations
@@ -27,7 +28,7 @@ import com.uvg.renato.lab8.presentation.mainFlow.location.locationsGraph
 import com.uvg.renato.lab8.presentation.mainFlow.userProfile.userProfileScreen
 
 @Composable
-fun MainFlowScreen(onLogOutClick:()->Unit,navController: NavHostController= rememberNavController()) {
+fun MainFlowScreen(onLogOutClick:()->Unit,navController: NavHostController= rememberNavController(),userPreferences: UserPreferences) {
     var bottomBarVisible by rememberSaveable {
         mutableStateOf(false)
     }
@@ -71,7 +72,7 @@ fun MainFlowScreen(onLogOutClick:()->Unit,navController: NavHostController= reme
         {
             characterGraph(navController)
             locationsGraph(navController)
-            userProfileScreen(onLogOutClick)
+            userProfileScreen(onLogOutClick, userPreferences = userPreferences)
         }
     }
 }

@@ -8,23 +8,31 @@ import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.padding
 import androidx.compose.material3.Scaffold
 import androidx.compose.ui.Modifier
+import androidx.datastore.core.DataStore
+import androidx.datastore.preferences.core.Preferences
+import androidx.datastore.preferences.preferencesDataStore
 import androidx.navigation.compose.rememberNavController
 import com.uvg.renato.lab8.presentation.navigation.AppNavigation
 import com.uvg.renato.lab8.ui.theme.Lab8Theme
+import android.content.Context
+import com.uvg.renato.lab8.data.source.UserPreferences
 
+val Context.dataStore: DataStore<Preferences> by preferencesDataStore(name = "settings")
 
 class MainActivity : ComponentActivity() {
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         enableEdgeToEdge()
         setContent {
             val navController = rememberNavController()
-
+            val userPreferences = UserPreferences(dataStore = dataStore)
             Lab8Theme {
                 Scaffold(modifier = Modifier.fillMaxSize()) { innerPadding ->
                     AppNavigation(
                         modifier = Modifier.fillMaxSize().padding(innerPadding),
-                        navController = navController
+                        navController = navController,
+                        userPreferences = userPreferences
                     )
                 }
             }

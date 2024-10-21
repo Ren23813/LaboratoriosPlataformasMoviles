@@ -22,8 +22,11 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.text.input.TextFieldValue
 import androidx.compose.ui.unit.dp
+import androidx.datastore.core.DataStore
 import com.uvg.renato.lab8.R
-import com.uvg.renato.lab8.data.repository.UserPreferences
+import com.uvg.renato.lab8.data.source.UserPreferences
+import kotlinx.coroutines.CoroutineScope
+import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
 import okhttp3.internal.checkOffsetAndCount
 
@@ -31,35 +34,42 @@ import okhttp3.internal.checkOffsetAndCount
 @Composable
 fun LoginRoute(
     onLoginClick: () -> Unit,
+    userPreferences: UserPreferences
 ) {
     LoginScreen(
         onLoginClick = onLoginClick,
+        userPreferences = userPreferences,
         modifier = Modifier.fillMaxSize()
     )
 }
-
 @Composable
 fun LoginScreen(
+    userPreferences: UserPreferences,
     onLoginClick: () -> Unit,
-    modifier: Modifier = Modifier)
-{
-    var userName by remember{ mutableStateOf(TextFieldValue(""))}
-    val coroutineScope = rememberCoroutineScope()
+    modifier: Modifier = Modifier
+) {
+    var userName by remember { mutableStateOf(TextFieldValue("")) }
 
-    Column (verticalArrangement = Arrangement.Center, horizontalAlignment = Alignment.CenterHorizontally, modifier = Modifier
-        .fillMaxSize()
-        .padding(10.dp)){
+    Column(
+        verticalArrangement = Arrangement.Center,
+        horizontalAlignment = Alignment.CenterHorizontally,
+        modifier = Modifier
+            .fillMaxSize()
+            .padding(10.dp)
+    ) {
         Spacer(modifier = Modifier.height(200.dp))
         Image(painter = painterResource(id = R.drawable.rick_and_morty_emblem), contentDescription = "series logo")
-        TextField(value = userName, onValueChange = {userName = it}, label = { Text(text = "Nombre")})
-        Button(onClick = onLoginClick , modifier = Modifier.fillMaxWidth() ) {
+        TextField(value = userName, onValueChange = { userName = it }, label = { Text(text = "Nombre") })
+        Button(onClick = {
+            // Guardar el nombre en DataStore
+            CoroutineScope(Dispatchers.IO).launch {
+                userPreferences.saveUserName(userName.text)
+            }
+            onLoginClick()
+        }, modifier = Modifier.fillMaxWidth()) {
             Text(text = "Entrar")
-
         }
         Spacer(modifier = Modifier.height(225.dp))
         Text(text = "Renato Rojas - #23813")
-
     }
 }
-
-

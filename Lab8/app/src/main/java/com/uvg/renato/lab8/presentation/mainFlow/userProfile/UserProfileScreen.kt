@@ -15,6 +15,7 @@ import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
@@ -25,16 +26,18 @@ import androidx.compose.ui.draw.clip
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.unit.dp
 import com.uvg.renato.lab8.R
+import com.uvg.renato.lab8.data.source.UserPreferences
 
 
 @Composable
 fun UserProfileRoute(
     onLogOutClick: () -> Unit,
-
+    userPreferences: UserPreferences
 ) {
     UserProfileScreen(
         modifier = Modifier.fillMaxSize(),
-        onLogOutClick = onLogOutClick
+        onLogOutClick = onLogOutClick,
+        userPreferences = userPreferences
     )
 }
 
@@ -43,8 +46,10 @@ fun UserProfileRoute(
 @Composable
 private fun UserProfileScreen(
     modifier: Modifier = Modifier,
+    userPreferences: UserPreferences,
     onLogOutClick: () -> Unit
 ) {
+    val userName by userPreferences.userName.collectAsState(initial = "No name")
 
     Column(modifier = modifier.fillMaxSize()) {
         Column(
@@ -59,7 +64,7 @@ private fun UserProfileScreen(
                 CircleShape))
             Spacer(modifier = Modifier.height(30.dp))
 
-            Text(text = "Renato Manuel Rojas Roldan", style = MaterialTheme.typography.titleLarge)
+            Text(text = "$userName", style = MaterialTheme.typography.titleLarge)
             Spacer(modifier = Modifier.height(10.dp))
             Row(horizontalArrangement = Arrangement.SpaceBetween, modifier = Modifier.fillMaxWidth()) {
                 Text(text = "Carné")

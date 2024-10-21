@@ -5,8 +5,8 @@ import androidx.navigation.NavGraphBuilder
 import androidx.navigation.NavOptions
 import androidx.navigation.navigation
 import com.uvg.renato.lab8.presentation.mainFlow.location.locationDetails.LocationDetailsDestination
-import com.uvg.renato.lab8.presentation.mainFlow.location.locations.LocationsDestination
-import com.uvg.renato.lab8.presentation.mainFlow.location.locations.locationsScreen
+import com.uvg.renato.lab8.presentation.mainFlow.location.locations.LocationListDestination
+import com.uvg.renato.lab8.presentation.mainFlow.location.locations.locationListScreen
 import com.uvg.renato.lab8.presentation.mainFlow.location.locationDetails.locationDetailsScreen
 import com.uvg.renato.lab8.presentation.mainFlow.location.locationDetails.navigateToLocationDetailsScreen
 import kotlinx.serialization.Serializable
@@ -23,9 +23,9 @@ fun NavGraphBuilder.locationsGraph(
     navController: NavController
 ) {
     navigation<LocationsNavGraph>(
-        startDestination = LocationsDestination
+        startDestination = LocationListDestination
     ) {
-        locationsScreen(
+        locationListScreen(
             onLocationClick = navController::navigateToLocationDetailsScreen
         )
         locationDetailsScreen(

@@ -1,4 +1,4 @@
-package com.uvg.renato.lab8.data.source
+package com.uvg.renato.lab8.data.local
 
 import com.uvg.renato.lab8.data.model.Character
 

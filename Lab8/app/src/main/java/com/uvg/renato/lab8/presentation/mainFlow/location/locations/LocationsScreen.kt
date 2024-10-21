@@ -1,104 +1,102 @@
 package com.uvg.renato.lab8.presentation.mainFlow.location.locations
 
-import com.uvg.renato.lab8.data.model.Location
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
-import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
-import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.lazy.LazyColumn
-import com.uvg.renato.lab8.data.source.LocationDb
-import androidx.compose.material3.ExperimentalMaterial3Api
+import androidx.compose.foundation.lazy.items
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Text
-import androidx.compose.material3.TopAppBar
-import androidx.compose.material3.TopAppBarDefaults
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
+import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.unit.dp
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import androidx.lifecycle.viewmodel.compose.viewModel
-import com.uvg.renato.lab8.presentation.mainFlow.location.locationDetails.LocationDetailsState
-import com.uvg.renato.lab8.presentation.mainFlow.location.locationDetails.LocationDetailsViewModel
+import com.uvg.renato.lab8.data.model.Location
+import com.uvg.renato.lab8.presentation.common.ErrorView
+import com.uvg.renato.lab8.presentation.common.LoadingView
 
 
 @Composable
-fun LocationsRoute(
-    onLocationClick:(Int)->Unit,
-    viewModel: LocationDetailsViewModel = viewModel(),
+fun LocationListRoute(
+    onLocationClick: (Int) -> Unit,
+    viewModel: LocationListViewModel = viewModel(factory = LocationListViewModel.Factory)
 ) {
-    val state by viewModel.uiState.collectAsStateWithLifecycle()
-    LocationsScreen(
-        state =state,
-        onLocationClick = {viewModel.getLocationData()},
+    val state by viewModel.state.collectAsStateWithLifecycle()
+    LocationListScreen(
+        state = state,
+        forceError = {  },
+        onRetryClick = { },
+        onLocationClick = onLocationClick,
         modifier = Modifier.fillMaxSize()
     )
 }
 
-val myDb = LocationDb()
-
-@OptIn(ExperimentalMaterial3Api::class)
 @Composable
-private fun LocationsScreen(
-    state: LocationDetailsState,
+private fun LocationListScreen(
+    state: LocationListState,
+    forceError: () -> Unit,
+    onRetryClick: () -> Unit,
     onLocationClick: (Int) -> Unit,
-    modifier:Modifier = Modifier
-    ) {
-    Column {
-        TopAppBar(
-            modifier = Modifier
-                .height(75.dp)
-                .fillMaxWidth(),
-            title = { Text(text = "Locations", style = MaterialTheme.typography.titleLarge) },
-            colors = TopAppBarDefaults.topAppBarColors(
-                containerColor = MaterialTheme.colorScheme.primaryContainer,
-                navigationIconContentColor = MaterialTheme.colorScheme.onPrimaryContainer,
-                titleContentColor = MaterialTheme.colorScheme.onPrimaryContainer
-            )
-        )
-        LazyColumn(modifier = Modifier.weight(0.8f)) {
+    modifier: Modifier = Modifier
+) {
+    Box(modifier) {
+        when {
+            state.isLoading -> {
+                LoadingView(
+                    loadingText = "Obteniendo ubicaciones",
+                    modifier = Modifier
+                        .align(Alignment.Center)
+                        .clickable { forceError() }
+                )
+            }
 
-            items(myDb.getAllLocations().size) {
-                LocationsContent(location = state.data, hasError = state.error, isLoading = state.loading, modifier = Modifier
-                    .fillMaxWidth()
-                    .clickable { state.data?.let { onLocationClick(it.id) } })
+            state.isError -> {
+                ErrorView(
+                    errorText = "Mi pana: Error al obtener ubicaciones",
+                    onRetryClick = onRetryClick,
+                    modifier = Modifier
+                        .align(Alignment.Center)
+                )
+            }
 
+            else -> {
+                LazyColumn(
+                    modifier = Modifier.fillMaxSize()
+                ) {
+                    items(state.locations) { item ->
+                        LocationItem(
+                            location = item,
+                            modifier = Modifier
+                                .fillMaxWidth()
+                                .clickable { onLocationClick(item.id) }
+                        )
+                    }
+                }
             }
         }
     }
 }
 
 @Composable
-fun LocationsContent(location:Location?,modifier:Modifier = Modifier   , isLoading:Boolean,
-                     hasError:Boolean,)
-{
-                Box(
-                    modifier = Modifier
-                        .fillMaxWidth()
-                        .height(48.dp)
-                ) {
-                    Row {
-                        Column {
-                            if (location != null) {
-                                Text(
-                                    text = location.name.toString(),
-                                    modifier = Modifier
-                                        .padding(start = 16.dp),
-                                    style = MaterialTheme.typography.bodyLarge
-                                )
-                            }
-                            if (location != null) {
-                                Text(
-                                    text = location.type,
-                                    modifier = Modifier.padding(start = 16.dp),
-                                    style = MaterialTheme.typography.labelMedium
-                                )
-                            }
-                        }
-                    }
-                }
-            }
+private fun LocationItem(
+    location: Location,
+    modifier: Modifier = Modifier
+) {
+    Column(modifier = modifier
+        .padding(16.dp)
+    ) {
+        Text(text = location.name)
+        Text(
+            text = location.type,
+            style = MaterialTheme.typography.labelSmall
+        )
+    }
+}
+
+

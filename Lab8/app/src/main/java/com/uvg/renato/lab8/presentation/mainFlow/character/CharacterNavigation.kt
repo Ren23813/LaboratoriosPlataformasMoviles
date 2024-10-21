@@ -20,10 +20,7 @@ fun NavGraphBuilder.characterGraph(
         startDestination = CharacterListDestination
     ) {
         characterListScreen(
-            onCharacterClick = {character ->
-                navController.navigateToCharacterProfileScreen(
-                    destination = CharactersProfileDestination(characterId = character.id)
-                )}
+            onCharacterClick = navController::navigateToCharacterProfileScreen
         )
         characterProfileScreen(
             onNavigateBack = navController::navigateUp

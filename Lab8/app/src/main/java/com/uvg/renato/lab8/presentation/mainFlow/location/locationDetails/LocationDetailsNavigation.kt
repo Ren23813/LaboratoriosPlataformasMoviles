@@ -27,7 +27,7 @@ fun NavGraphBuilder.locationDetailsScreen(
     onNavigateBack: () -> Unit
 ) {
     composable<LocationDetailsDestination> {
-        LocationDetailsRoute(
+        LocationProfileRoute(
             onNavigateBack = onNavigateBack
         )
     }

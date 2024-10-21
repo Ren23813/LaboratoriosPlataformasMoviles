@@ -10,7 +10,7 @@ import androidx.compose.material.icons.outlined.Person
 import androidx.compose.ui.graphics.vector.ImageVector
 import com.uvg.renato.lab8.presentation.mainFlow.character.charactersList.CharacterListDestination
 import com.uvg.renato.lab8.presentation.mainFlow.character.CharacterNavGraph
-import com.uvg.renato.lab8.presentation.mainFlow.location.locations.LocationsDestination
+import com.uvg.renato.lab8.presentation.mainFlow.location.locations.LocationListDestination
 import com.uvg.renato.lab8.presentation.mainFlow.location.LocationsNavGraph
 import com.uvg.renato.lab8.presentation.mainFlow.userProfile.UserProfileDestination
 
@@ -44,6 +44,6 @@ val navigationItems = listOf(
 
 val topLevelDestinations = listOf(
     CharacterListDestination::class,
-    LocationsDestination::class,
+    LocationListDestination::class,
     UserProfileDestination::class
 )

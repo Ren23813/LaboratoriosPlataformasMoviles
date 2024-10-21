@@ -10,22 +10,20 @@ import kotlinx.serialization.Serializable
 data class CharactersProfileDestination(
     val characterId: Int,
 )
-
 fun NavController.navigateToCharacterProfileScreen(
-    destination: CharactersProfileDestination,
+    characterId: Int,
     navOptions: NavOptions? = null
 ) {
-    this.navigate(destination, navOptions)
+    this.navigate(
+        route = CharactersProfileDestination(characterId = characterId),
+        navOptions = navOptions
+    )
 }
 
 fun NavGraphBuilder.characterProfileScreen(
     onNavigateBack: () -> Unit
 ) {
-    composable<CharactersProfileDestination> { backStackEntry ->
-        val destination: CharactersProfileDestination = backStackEntry.toRoute()
-        CharacterProfileRoute(
-            id = destination.characterId,
-            onNavigateBack = onNavigateBack
-        )
+    composable<CharactersProfileDestination> {
+        CharacterProfileRoute(onNavigateBack = onNavigateBack)
     }
 }

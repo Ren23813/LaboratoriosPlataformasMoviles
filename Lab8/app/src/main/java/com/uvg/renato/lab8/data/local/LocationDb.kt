@@ -1,8 +1,7 @@
-package com.uvg.renato.lab8.data.source
+package com.uvg.renato.lab8.data.local
 
 import com.uvg.renato.lab8.data.model.Location
 
-// import .....Location
 
 class LocationDb {
     private val locations: List<Location> = listOf(

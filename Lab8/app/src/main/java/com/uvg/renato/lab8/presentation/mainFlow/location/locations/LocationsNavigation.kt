@@ -9,15 +9,12 @@ import kotlinx.serialization.Serializable
 
 
 @Serializable
-data object LocationsDestination
+data object LocationListDestination
 
-fun NavGraphBuilder.locationsScreen(
+fun NavGraphBuilder.locationListScreen(
     onLocationClick: (Int) -> Unit
 ) {
-    composable<LocationsDestination> {
-        LocationsRoute(
-            onLocationClick = onLocationClick,
-        )
+    composable<LocationListDestination> {
+        LocationListRoute(onLocationClick = onLocationClick)
     }
-
 }

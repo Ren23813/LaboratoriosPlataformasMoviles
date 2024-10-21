@@ -6,29 +6,15 @@ import androidx.navigation.NavGraphBuilder
 import androidx.navigation.NavOptions
 import androidx.navigation.compose.composable
 import com.uvg.renato.lab8.data.model.Character
-import com.uvg.renato.lab8.presentation.mainFlow.location.locations.LocationsDestination
 import kotlinx.serialization.Serializable
 
 @Serializable
 data object CharacterListDestination
 
 fun NavGraphBuilder.characterListScreen(
-    onCharacterClick: (Character) -> Unit
+    onCharacterClick: (Int) -> Unit
 ) {
     composable<CharacterListDestination> {
-        CharacterListRoute(
-            onCharacterClick = onCharacterClick,
-            modifier = Modifier.fillMaxWidth()
-        )
+        CharacterListRoute(onCharacterClick = onCharacterClick)
     }
-}
-
-
-fun NavController.navigateToLocationsScreen(
-    destination: LocationsDestination,
-
-    navOptions: NavOptions? = null
-) {
-    this.navigate(destination, navOptions)
-
 }

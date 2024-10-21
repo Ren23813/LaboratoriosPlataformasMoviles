@@ -8,6 +8,7 @@ import kotlinx.serialization.Serializable
 
 @Serializable
 data object UserProfileDestination
+
 fun NavGraphBuilder.userProfileScreen(
     onLogOutClick: () -> Unit
 ) {

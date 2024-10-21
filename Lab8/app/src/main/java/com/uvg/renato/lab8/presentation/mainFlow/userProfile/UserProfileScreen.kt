@@ -65,7 +65,7 @@ private fun UserProfileScreen(
                 Text(text = "Carné")
                 Text(text = "23813")
             }
-           Button(onClick = onLogOutClick) { //navegar al login; limpiar backstack
+           Button(onClick = onLogOutClick) {
                Text(text = "Cerrar sesión")
            }
 

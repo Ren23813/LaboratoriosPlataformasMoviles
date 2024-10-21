@@ -13,6 +13,10 @@ listenablefuture = "9999.0-empty-to-avoid-conflict-with-guava"
 navigationCompose = "2.8.0-rc01"
 kotlinSerialization = "1.6.3"
 compilercommon = "3.2.0-alpha11"
+dataStore = "1.1.1"
+room = "2.6.1"
+roomKtx = "2.6.1"
+
 
 
 [libraries]
@@ -35,6 +39,12 @@ androidx-compose-navigation = { group = "androidx.navigation", name = "navigatio
 kotlinx-serialization-json = { group = "org.jetbrains.kotlinx", name = "kotlinx-serialization-json", version = "1.6.3" }
 androidx-compilercommon = { group = "androidx.databinding", name = "compilerCommon", version.ref = "compilercommon" }
 listenablefuture = { module = "com.google.guava:listenablefuture", version.ref = "listenablefuture" }
+androidx-datastore = {group="androidx.datastore",name="datastore-preferences",version.ref="dataStore"}
+#androidx-room-common = { group = "androidx.room", name = "room-common", version.ref = "roomCommon" }
+androidx-room-ktx = { group = "androidx.room", name = "room-ktx", version.ref = "room" }
+androidx-room-runtime={group="androidx.room",name="room-runtime",version.ref="room"}
+androidx-room-compiler={group="androidx.room",name="room-compiler",version.ref="room"}
+
 
 
 [plugins]

@@ -6,9 +6,17 @@ import androidx.lifecycle.viewModelScope
 import androidx.lifecycle.viewmodel.initializer
 import androidx.lifecycle.viewmodel.viewModelFactory
 import com.uvg.renato.lab8.data.local.dao.CharacterDAO
+import com.uvg.renato.lab8.data.local.dao.mapToEntity
 import com.uvg.renato.lab8.data.local.entity.mapToModel
 import com.uvg.renato.lab8.data.model.Character
+import com.uvg.renato.lab8.data.network.KtorRickAPI
+import com.uvg.renato.lab8.data.network.dto.mapToCharacterModel
 import com.uvg.renato.lab8.dependencies.Dependencies
+import com.uvg.renato.lab8.dependencies.KtorDependencies
+import com.uvg.renato.lab8.domainRepo.network.RickAPI
+import com.uvg.renato.lab8.domainRepo.network.util.map
+import com.uvg.renato.lab8.domainRepo.network.util.onError
+import com.uvg.renato.lab8.domainRepo.network.util.onSuccess
 import com.uvg.renato.lab8.domainRepo.repository.CharacterRepository
 import kotlinx.coroutines.Job
 import kotlinx.coroutines.flow.MutableStateFlow
@@ -23,7 +31,7 @@ import kotlinx.coroutines.launch
 
 class CharacterListViewModel(
     private val characterDAO: CharacterDAO,
-    private val characterRepository: CharacterRepository
+    val rickAPI: RickAPI
 ) : ViewModel() {
     val characters = characterDAO.getAllCharacters()
         .map { entities -> entities.map { it.mapToModel() } }
@@ -64,23 +72,28 @@ class CharacterListViewModel(
 
     private fun getCharacters() {
 
-        getDataJob = viewModelScope.launch {
-            _state.update { state ->
-                state.copy(
-                    isLoading = true,
-                    isError = false
-                )
-            }
+        viewModelScope.launch {
+                rickAPI
+                    .getAllCharacters()
+                .map { response -> response.data.map { it.mapToCharacterModel() } }
+                .onSuccess { characters ->
+                    _state.update { it.copy(
+                        isLoading = false,
+                        isError = false,
+                        characters = characters
+                    ) }
+                    characterDAO.insertAllCharacters(characters.map { it.mapToEntity() })
+                }
+                .onError {
+                    _state.update { it.copy(
+                        isLoading = false,
+                        isError = false,
+                    ) }
 
-            val characters = characterRepository.getCharacters()
 
-            _state.update { state ->
-                state.copy(
-                    isLoading = false,
-                    characters = characters
-                )
-            }
+                }
         }
+
     }
 
     companion object {
@@ -88,8 +101,8 @@ class CharacterListViewModel(
             initializer {
                 val application = checkNotNull(this[ViewModelProvider.AndroidViewModelFactory.APPLICATION_KEY])
                 val repositoryDao = Dependencies.provideDatabase(application)
-                val repository = Dependencies.provideCharacterRepository(application)
-                CharacterListViewModel(repositoryDao.characterDao(),repository)
+                val rickAPI = KtorRickAPI(KtorDependencies.provideHttpClient())
+                CharacterListViewModel(repositoryDao.characterDao(),rickAPI)
             }
         }
     }

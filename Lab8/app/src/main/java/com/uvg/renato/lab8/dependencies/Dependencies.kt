@@ -17,7 +17,7 @@ object Dependencies {
 
     private fun buildDatabase(context: Context): AppDatabase {
         return Room.databaseBuilder(
-            context,
+            context.applicationContext,
             AppDatabase::class.java,
             "full.db"
         ).build()
